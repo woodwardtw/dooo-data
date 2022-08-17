@@ -32,7 +32,14 @@ function dooo_data_dashboard_widgets() {
    $allowed_roles = array( 'administrator', 'super-admin');
    if ( array_intersect( $allowed_roles, $user->roles ) ){
       global $wp_meta_boxes;
+      $domain = $_SERVER['SERVER_NAME'];
+      $name = explode(".", $domain)[0];
       wp_add_dashboard_widget('custom_dooo_widget', '<h2>DoOO Data</h2>', 'dooo_data_foo', '', '', 'column3', 'high');
+      var_dump($name . '_last_login.csv');
+      $root =  $_SERVER['DOCUMENT_ROOT'];
+      var_dump($root . 'root/' . $name . '_last_login.csv');
+      //Python stuff to  file in /root .... file_name = os.popen("echo $HOSTNAME").read().split(".")[0] + "_last_logins.csv"
+
    }
   }
 //wp_add_dashboard_widget(  $widget_id,  $widget_name,  $callback,  $control_callback = null,  $callback_args = null,  $context = 'normal', string $priority = 'core' )
