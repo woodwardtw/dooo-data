@@ -77,7 +77,7 @@ function dooo_data_logins(){
           $user = $row[1];
           $email = $row[2];
           $domain = $row[3];
-          $usage = $row[4];
+          $usage = cleanDataUsage($row[4]);
           $start = $row[5];
           if($key === 0){
             $html .="<h2>Last Login</h2>
@@ -88,7 +88,7 @@ function dooo_data_logins(){
                      <th scope='col'>{$user}</th>
                      <th scope='col'>{$email}</th>
                      <th scope='col'>{$domain}</th>
-                     <th scope='col'>{$usage}</th>
+                     <th scope='col'>{$usage} (MB)</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -107,6 +107,16 @@ function dooo_data_logins(){
    }
 }
 
+
+function cleanDataUsage($data){
+   if(strpos($data, 'M')>0){
+      $number = explode('M', $data);
+      return $number[0];
+   } else {
+      return $data;
+   }
+   
+}
 //LOGGER -- like frogger but more useful
 
 if ( ! function_exists('write_log')) {

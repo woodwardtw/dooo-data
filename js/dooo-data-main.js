@@ -2,7 +2,7 @@ console.log('locked and loaded')
 
 jQuery(document).ready(function() {
     jQuery('#last-login-table').DataTable( {
-        pageLength: 3,
+        pageLength: 10,
         dom: 'Bfrtip',
         buttons: [
             'copy',

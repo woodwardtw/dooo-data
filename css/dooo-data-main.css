@@ -33,3 +33,19 @@
 	background-color: #424242;
 	cursor:  pointer;
 }
+
+.dooo-table td {
+	padding:  5px 10px;
+}
+
+.dooo-table tr:hover, .dooo-table tr.odd:hover {
+	background-color: yellow;
+}
+
+.dooo-table tr.odd {
+	background-color: #efefef;
+}
+
+#last-login-table {
+	margin-top:  15px;
+}
