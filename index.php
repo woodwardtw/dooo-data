@@ -14,7 +14,7 @@ Text Domain: my-toolset
 */
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-add_action('wp_enqueue_scripts', 'dooo_data_load_scripts');
+//add_action('wp_enqueue_scripts', 'dooo_data_load_scripts');
 
 function dooo_data_load_scripts() {                           
     $deps = array('jquery');
@@ -24,56 +24,71 @@ function dooo_data_load_scripts() {
     wp_enqueue_style( 'dooo_data-main-css', plugin_dir_url( __FILE__) . 'css/dooo-data-main.css');
 }
 
+add_action('admin_enqueue_scripts', 'dooo_data_load_scripts');
 
 
 
-add_action('wp_dashboard_setup', 'dooo_data_dashboard_widgets');
+/**
+ * Remove the default welcome dashboard message
+ *
+ */
+remove_action( 'welcome_panel', 'wp_welcome_panel' );
+
+add_action('admin_notices', 'dooo_data_logins');
+
+
+
+//add_action('wp_dashboard_setup', 'dooo_data_dashboard_widgets');
   
-function dooo_data_dashboard_widgets() {
+// function dooo_data_dashboard_widgets() {
+//    $user = wp_get_current_user();
+//    $allowed_roles = array( 'administrator', 'super-admin');
+//    if ( array_intersect( $allowed_roles, $user->roles ) ){
+//       global $wp_meta_boxes;
+//       $domain = $_SERVER['SERVER_NAME'];
+//       $name = explode(".", $domain)[0];
+//       wp_add_dashboard_widget('custom_dooo_widget', '<h2>DoOO Data</h2>', 'dooo_data_foo', '', '', 'column3', 'high');           
+//    }
+//   }
+
+function dooo_data_logins(){
    $user = wp_get_current_user();
    $allowed_roles = array( 'administrator', 'super-admin');
-   if ( array_intersect( $allowed_roles, $user->roles ) ){
-      global $wp_meta_boxes;
-      $domain = $_SERVER['SERVER_NAME'];
-      $name = explode(".", $domain)[0];
-      wp_add_dashboard_widget('custom_dooo_widget', '<h2>DoOO Data</h2>', 'dooo_data_foo', '', '', 'column3', 'high');           
+   if ( array_intersect( $allowed_roles, $user->roles ) && get_current_screen()->base === 'dashboard'){
+      require_once( plugin_dir_path( __FILE__ ) . 'data/last-logins.php' );
+      //$data = str_getcsv($bar);
+      $data = str_getcsv($bar, "\n");
+      $html = "<div id='doo-data'><h1>DoOO Data</h1>";
+      //var_dump($data);
+      foreach ($data as $key=>$line) {
+          $row = explode(",", $line);
+          $date = $row[0];
+          $user = $row[1];
+          $email = $row[2];
+          $domain = $row[3];
+          $usage = $row[4];
+          $start = $row[5];
+          if($key === 0){
+            $html .="<h2>Last Login</h2>
+                  <table class='dooo-table'><tr>
+                     <th scope='col'>{$date}</th>
+                     <th scope='col'>{$user}</th>
+                     <th scope='col'>{$email}</th>
+                     <th scope='col'>{$domain}</th>
+                     <th scope='col'>{$usage}</th>
+                  </tr>";
+          } else {
+            $html .="<tr>
+                     <td>{$date}</td>
+                     <td>{$user}</td>
+                     <td>{$email}</td>
+                     <td>{$domain}</td>
+                     <td>{$usage}</td>
+                  </tr>";
+          }
+      }
+      echo $html . '</table></div>';
    }
-  }
-//wp_add_dashboard_widget(  $widget_id,  $widget_name,  $callback,  $control_callback = null,  $callback_args = null,  $context = 'normal', string $priority = 'core' )
-
-function dooo_data_foo(){
-   require_once( plugin_dir_path( __FILE__ ) . 'data/last-logins.php' );
-   //$data = str_getcsv($bar);
-   $data = str_getcsv($bar, "\n");
-   $html = '';
-   //var_dump($data);
-   foreach ($data as $key=>$line) {
-       $row = explode(",", $line);
-       $date = $row[0];
-       $user = $row[1];
-       $email = $row[2];
-       $domain = $row[3];
-       $usage = $row[4];
-       $start = $row[5];
-       if($key === 0){
-         $html .="<table><tr>
-                  <th scope='col'>{$date}</th>
-                  <th scope='col'>{$user}</th>
-                  <th scope='col'>{$email}</th>
-                  <th scope='col'>{$domain}</th>
-                  <th scope='col'>{$usage}</th>
-               </tr>";
-       } else {
-         $html .="<tr>
-                  <td>{$date}</td>
-                  <td>{$user}</td>
-                  <td>{$email}</td>
-                  <td>{$domain}</td>
-                  <td>{$usage}</td>
-               </tr>";
-       }
-   }
-   echo $html . '</table>';
 }
 
 //LOGGER -- like frogger but more useful
