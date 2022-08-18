@@ -21,9 +21,16 @@ function dooo_data_load_scripts() {
 
        $deps = array('jquery');
        $version= '1.0'; 
-       $in_footer = true;    
-       wp_enqueue_script('dooo_data-main-js', plugin_dir_url( __FILE__) . 'js/dooo-data-main.js', $deps, $version, $in_footer); 
+       $in_footer = true;         
        wp_enqueue_style( 'dooo_data-main-css', plugin_dir_url( __FILE__) . 'css/dooo-data-main.css');
+
+        wp_enqueue_script('dataTables', plugins_url('js/jquery.dataTables.min.js', __FILE__), ['jquery'], false, true);
+        wp_enqueue_script('dataTablesButtons', plugins_url('js/dataTables.buttons.min.js', __FILE__) , ['dataTables'], false, true);
+        wp_enqueue_script('dataTablesJs', plugins_url('js/jszip.min.js', __FILE__), ['dataTables'], false, true);
+        wp_enqueue_script('dataTablesFonts', plugins_url('js/vfs_fonts.js', __FILE__), ['dataTables'], false, true);
+        wp_enqueue_script('dataTablesHTML5', plugins_url('js/buttons.html5.min.js', __FILE__), ['dataTables'], false, true);
+        wp_enqueue_script('dataTablesPrint', plugins_url('js/buttons.print.min.js', __FILE__), ['dataTables'], false, true);
+          wp_enqueue_script('dooo_data-main-js', plugin_dir_url( __FILE__) . 'js/dooo-data-main.js', ['dataTables'], '1', true); 
     }
 }
 
@@ -74,13 +81,18 @@ function dooo_data_logins(){
           $start = $row[5];
           if($key === 0){
             $html .="<h2>Last Login</h2>
-                  <table class='dooo-table'><tr>
+                  <table id='last-login-table' class='dooo-table'>
+                  <thead>
+                  <tr>
                      <th scope='col'>{$date}</th>
                      <th scope='col'>{$user}</th>
                      <th scope='col'>{$email}</th>
                      <th scope='col'>{$domain}</th>
                      <th scope='col'>{$usage}</th>
-                  </tr>";
+                  </tr>
+                  </thead>
+                  <tbody>
+                  ";
           } else {
             $html .="<tr>
                      <td>{$date}</td>
@@ -91,7 +103,7 @@ function dooo_data_logins(){
                   </tr>";
           }
       }
-      echo $html . '</table></div>';
+      echo $html . '</tbody></table></div>';
    }
 }
 
