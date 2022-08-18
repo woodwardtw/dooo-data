@@ -49,3 +49,11 @@
 #last-login-table {
 	margin-top:  15px;
 }
+
+#last-login-table th {
+	cursor: pointer;
+}
+
+#last-login-table th:hover {
+	background-color: ;
+}
