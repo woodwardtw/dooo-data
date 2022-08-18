@@ -16,15 +16,19 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 //add_action('wp_enqueue_scripts', 'dooo_data_load_scripts');
 
-function dooo_data_load_scripts() {                           
-    $deps = array('jquery');
-    $version= '1.0'; 
-    $in_footer = true;    
-    wp_enqueue_script('dooo_data-main-js', plugin_dir_url( __FILE__) . 'js/dooo-data-main.js', $deps, $version, $in_footer); 
-    wp_enqueue_style( 'dooo_data-main-css', plugin_dir_url( __FILE__) . 'css/dooo-data-main.css');
+function dooo_data_load_scripts() { 
+   if(get_current_screen()->base === 'dashboard'){
+
+       $deps = array('jquery');
+       $version= '1.0'; 
+       $in_footer = true;    
+       wp_enqueue_script('dooo_data-main-js', plugin_dir_url( __FILE__) . 'js/dooo-data-main.js', $deps, $version, $in_footer); 
+       wp_enqueue_style( 'dooo_data-main-css', plugin_dir_url( __FILE__) . 'css/dooo-data-main.css');
+    }
 }
 
 add_action('admin_enqueue_scripts', 'dooo_data_load_scripts');
+
 
 
 
