@@ -14,7 +14,7 @@
     flex-flow: row wrap;
     justify-content: space-between;
     width:  100%;
-	max-width: 900px;
+	max-width: 1200px;
 }
 
 .dt-buttons, .dataTables_info {
