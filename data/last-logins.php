@@ -8,7 +8,7 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-$bar = 'LAST LOGIN DATE, USERNAME, EMAIL, PRIMARY DOMAIN, DISK USAGE, START DATE/n
+$bar = 'LAST LOGIN DATE, USERNAME, EMAIL, PRIMARY DOMAIN, DISK USAGE, START DATE
 2022-08-16,a,a@middlebury.edu,a.middcreate.net,7252M,2016-06-28
 2022-08-16,b,b@middlebury.edu,b.middcreate.net,1076M,2022-02-18
 2022-08-12,c,c@middlebury.edu,c.middcreate.net,791M,2022-06-21

@@ -89,6 +89,7 @@ function dooo_data_logins(){
                      <th scope='col'>{$email}</th>
                      <th scope='col'>{$domain}</th>
                      <th scope='col'>{$usage} (MB)</th>
+                      <th scope='col'>{$start}</th>
                   </tr>
                   </thead>
                   <tbody>
