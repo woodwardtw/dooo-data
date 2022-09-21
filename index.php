@@ -101,6 +101,7 @@ function dooo_data_logins(){
                      <td>{$email}</td>
                      <td><a href='http://{$domain}'>{$domain}</a></td>
                      <td>{$usage}</td>
+                     <td>{$start}</td>
                   </tr>";
           }
       }
