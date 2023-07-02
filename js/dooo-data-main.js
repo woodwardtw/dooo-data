@@ -1,5 +1,3 @@
-console.log('locked and loaded')
-
 jQuery(document).ready(function() {
     jQuery('#last-login-table').DataTable( {
         pageLength: 10,
@@ -12,7 +10,7 @@ jQuery(document).ready(function() {
               title: null
             },{
               extend: 'csvHtml5',
-              header: true,
+              header: false,
               title: null
             }          
         ]
